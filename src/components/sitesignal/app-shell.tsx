@@ -14,7 +14,7 @@ export interface TabItem {
   badge?: number;
 }
 
-function RoleSwitch({ role, onSwitch }: { role: Role; onSwitch?: (role: Role) => void }) {
+function RoleSwitch({ role, onSwitch }: { role: Role; onSwitch?: ((role: Role) => void) | undefined }) {
   const navigate = useNavigate();
   const go = (next: Role) => {
     if (next === role) return;
@@ -52,7 +52,7 @@ export function AppShell({
 }: {
   role: Role;
   tabs?: TabItem[];
-  onSwitchRole?: (role: Role) => void;
+  onSwitchRole?: ((role: Role) => void) | undefined;
   children: ReactNode;
 }) {
   return (

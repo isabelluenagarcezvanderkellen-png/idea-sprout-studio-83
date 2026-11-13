@@ -61,9 +61,9 @@ export function PhotoPicker({
   demoPhoto,
   emptyLabel = "Take or upload a photo",
 }: {
-  value?: string;
+  value?: string | undefined;
   onChange: (url?: string) => void;
-  demoPhoto?: string;
+  demoPhoto?: string | undefined;
   emptyLabel?: string;
 }) {
   const id = useId();
