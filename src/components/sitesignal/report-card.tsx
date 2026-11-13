@@ -5,7 +5,7 @@ import { ReviewFlag, SeverityBadge, StatusBadge } from "@/components/sitesignal/
 import { effectiveSeverity, formatAgo, needsImmediateReview, type HazardReport, type Role } from "@/lib/hazards";
 import { cn } from "@/lib/utils";
 
-export function ReportThumb({ src, className }: { src?: string; className?: string }) {
+export function ReportThumb({ src, className }: { src?: string | undefined; className?: string | undefined }) {
   return src ? (
     <img src={src} alt="" loading="lazy" className={cn("object-cover", className)} />
   ) : (

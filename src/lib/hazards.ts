@@ -66,16 +66,16 @@ export interface HazardReport {
   aiSeverity: Severity;
   aiConfidence: number;
   /** Set once a manager confirms (or overrides) the AI suggestion. */
-  confirmedSeverity?: Severity;
+  confirmedSeverity?: Severity | undefined;
   status: Status;
   anonymous: boolean;
-  reporter?: string;
+  reporter?: string | undefined;
   mine: boolean;
-  photo?: string;
-  afterPhoto?: string;
-  actionTaken?: string;
-  assignedTo?: string;
-  plannedAction?: string;
+  photo?: string | undefined;
+  afterPhoto?: string | undefined;
+  actionTaken?: string | undefined;
+  assignedTo?: string | undefined;
+  plannedAction?: string | undefined;
   transcription: string;
   aiSummary: string;
   minutesAgo: number;
@@ -265,7 +265,7 @@ export const MOCK_TRANSCRIPT =
 export const MOCK_AI_TRIAGE = { severity: "High" as Severity, confidence: 0.82 };
 
 export interface NewReportInput {
-  photo?: string;
+  photo?: string | undefined;
   transcription: string;
   type: ReportType;
   category: Category;
