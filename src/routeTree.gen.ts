@@ -10,33 +10,131 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ManagerRouteImport } from './routes/manager'
+import { Route as WorkerRouteImport } from './routes/worker'
+import { Route as ManagerIndexRouteImport } from './routes/manager.index'
+import { Route as ManagerDashboardRouteImport } from './routes/manager.dashboard'
+import { Route as ManagerRisksRouteImport } from './routes/manager.risks'
+import { Route as WorkerIndexRouteImport } from './routes/worker.index'
+import { Route as WorkerReportRouteImport } from './routes/worker.report'
+import { Route as WorkerReportsRouteImport } from './routes/worker.reports'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ManagerRoute = ManagerRouteImport.update({
+  id: '/manager',
+  path: '/manager',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WorkerRoute = WorkerRouteImport.update({
+  id: '/worker',
+  path: '/worker',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ManagerIndexRoute = ManagerIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ManagerRoute,
+} as any)
+const ManagerDashboardRoute = ManagerDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => ManagerRoute,
+} as any)
+const ManagerRisksRoute = ManagerRisksRouteImport.update({
+  id: '/risks',
+  path: '/risks',
+  getParentRoute: () => ManagerRoute,
+} as any)
+const WorkerIndexRoute = WorkerIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => WorkerRoute,
+} as any)
+const WorkerReportRoute = WorkerReportRouteImport.update({
+  id: '/report',
+  path: '/report',
+  getParentRoute: () => WorkerRoute,
+} as any)
+const WorkerReportsRoute = WorkerReportsRouteImport.update({
+  id: '/reports',
+  path: '/reports',
+  getParentRoute: () => WorkerRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/manager': typeof ManagerRouteWithChildren
+  '/worker': typeof WorkerRouteWithChildren
+  '/manager/dashboard': typeof ManagerDashboardRoute
+  '/manager/risks': typeof ManagerRisksRoute
+  '/worker/report': typeof WorkerReportRoute
+  '/worker/reports': typeof WorkerReportsRoute
+  '/manager/': typeof ManagerIndexRoute
+  '/worker/': typeof WorkerIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/manager/dashboard': typeof ManagerDashboardRoute
+  '/manager/risks': typeof ManagerRisksRoute
+  '/worker/report': typeof WorkerReportRoute
+  '/worker/reports': typeof WorkerReportsRoute
+  '/manager': typeof ManagerIndexRoute
+  '/worker': typeof WorkerIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/manager': typeof ManagerRouteWithChildren
+  '/worker': typeof WorkerRouteWithChildren
+  '/manager/dashboard': typeof ManagerDashboardRoute
+  '/manager/risks': typeof ManagerRisksRoute
+  '/worker/report': typeof WorkerReportRoute
+  '/worker/reports': typeof WorkerReportsRoute
+  '/manager/': typeof ManagerIndexRoute
+  '/worker/': typeof WorkerIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/manager'
+    | '/worker'
+    | '/manager/dashboard'
+    | '/manager/risks'
+    | '/worker/report'
+    | '/worker/reports'
+    | '/manager/'
+    | '/worker/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/manager/dashboard'
+    | '/manager/risks'
+    | '/worker/report'
+    | '/worker/reports'
+    | '/manager'
+    | '/worker'
+  id:
+    | '__root__'
+    | '/'
+    | '/manager'
+    | '/worker'
+    | '/manager/dashboard'
+    | '/manager/risks'
+    | '/worker/report'
+    | '/worker/reports'
+    | '/manager/'
+    | '/worker/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ManagerRoute: typeof ManagerRouteWithChildren
+  WorkerRoute: typeof WorkerRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +146,99 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/manager': {
+      id: '/manager'
+      path: '/manager'
+      fullPath: '/manager'
+      preLoaderRoute: typeof ManagerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/worker': {
+      id: '/worker'
+      path: '/worker'
+      fullPath: '/worker'
+      preLoaderRoute: typeof WorkerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/manager/': {
+      id: '/manager/'
+      path: '/'
+      fullPath: '/manager/'
+      preLoaderRoute: typeof ManagerIndexRouteImport
+      parentRoute: typeof ManagerRoute
+    }
+    '/manager/dashboard': {
+      id: '/manager/dashboard'
+      path: '/dashboard'
+      fullPath: '/manager/dashboard'
+      preLoaderRoute: typeof ManagerDashboardRouteImport
+      parentRoute: typeof ManagerRoute
+    }
+    '/manager/risks': {
+      id: '/manager/risks'
+      path: '/risks'
+      fullPath: '/manager/risks'
+      preLoaderRoute: typeof ManagerRisksRouteImport
+      parentRoute: typeof ManagerRoute
+    }
+    '/worker/': {
+      id: '/worker/'
+      path: '/'
+      fullPath: '/worker/'
+      preLoaderRoute: typeof WorkerIndexRouteImport
+      parentRoute: typeof WorkerRoute
+    }
+    '/worker/report': {
+      id: '/worker/report'
+      path: '/report'
+      fullPath: '/worker/report'
+      preLoaderRoute: typeof WorkerReportRouteImport
+      parentRoute: typeof WorkerRoute
+    }
+    '/worker/reports': {
+      id: '/worker/reports'
+      path: '/reports'
+      fullPath: '/worker/reports'
+      preLoaderRoute: typeof WorkerReportsRouteImport
+      parentRoute: typeof WorkerRoute
+    }
   }
 }
 
+interface ManagerRouteChildren {
+  ManagerDashboardRoute: typeof ManagerDashboardRoute
+  ManagerRisksRoute: typeof ManagerRisksRoute
+  ManagerIndexRoute: typeof ManagerIndexRoute
+}
+
+const ManagerRouteChildren: ManagerRouteChildren = {
+  ManagerDashboardRoute: ManagerDashboardRoute,
+  ManagerRisksRoute: ManagerRisksRoute,
+  ManagerIndexRoute: ManagerIndexRoute,
+}
+
+const ManagerRouteWithChildren =
+  ManagerRoute._addFileChildren(ManagerRouteChildren)
+
+interface WorkerRouteChildren {
+  WorkerReportRoute: typeof WorkerReportRoute
+  WorkerReportsRoute: typeof WorkerReportsRoute
+  WorkerIndexRoute: typeof WorkerIndexRoute
+}
+
+const WorkerRouteChildren: WorkerRouteChildren = {
+  WorkerReportRoute: WorkerReportRoute,
+  WorkerReportsRoute: WorkerReportsRoute,
+  WorkerIndexRoute: WorkerIndexRoute,
+}
+
+const WorkerRouteWithChildren =
+  WorkerRoute._addFileChildren(WorkerRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ManagerRoute: ManagerRouteWithChildren,
+  WorkerRoute: WorkerRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
